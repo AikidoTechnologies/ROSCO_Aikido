@@ -91,17 +91,17 @@ def main():
     # Wind case
     r.wind_case_fcn = cl.ramp
     r.wind_case_opts = {
-        "U_start": 25,
-        "U_end": 50,
-        "t_start": 100,
-        "t_end": 700,
+        "UStart": 25,
+        "UEnd": 50,
+        "TStart": 100,
+        "TMax": 700,
     }
     if not FULL_TEST:
         r.wind_case_opts = {
-            "U_start": 25,
-            "U_end": 27,
-            "t_start": 1,
-            "t_end": 10,
+            "UStart": 25,
+            "UEnd": 27,
+            "TStart": 1,
+            "TMax": 10,
         }
 
 

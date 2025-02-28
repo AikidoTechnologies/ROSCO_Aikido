@@ -41,19 +41,19 @@ def main():
   r.wind_case_fcn = cl.ramp  # single step wind input
   if FULL_TEST: 
     r.wind_case_opts    = {
-      'U_start': 11,  # from 10 to 15 m/s
-      'U_end': 9,
-      't_start': 100,
-      't_end': 400,
+      'UStart': 11,  # from 10 to 15 m/s
+      'UEnd': 9,
+      'TStart': 100,
+      'TMax': 400,
       'both_dir': True,
       'vert_shear': 0.2
       }
   else:
     r.wind_case_opts    = {
-      'U_start': 11,  # from 10 to 15 m/s
-      'U_end': 9,
-      't_start': 2,
-      't_end': 4,
+      'UStart': 11,  # from 10 to 15 m/s
+      'UEnd': 9,
+      'TStart': 2,
+      'TMax': 4,
       'both_dir': True,
       'vert_shear': 0.2
       }

@@ -175,10 +175,10 @@ def main():
             )
         r.wind_case_fcn = cl.ramp  
         r.wind_case_opts    = {
-            'U_start': 20,  # from 10 to 15 m/s
-            'U_end': 50,
-            't_start': 500,
-            't_end': 2500,
+            'UStart': 20,  # from 10 to 15 m/s
+            'UEnd': 50,
+            'TStart': 500,
+            'TMax': 2500,
             }
         
         r.case_inputs[('ElastoDyn','BlPitch1')] = {'vals': [19.], 'group': 0}

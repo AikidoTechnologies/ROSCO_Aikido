@@ -275,7 +275,7 @@ if __name__ == "__main__":
         r.tuning_yaml   = 'IEA15MW.yaml'
         r.wind_case_fcn     = cl.simp_step
         r.wind_case_opts    = {
-            'U_start': [7],
+            'UStart': [7],
             'U_end': [9],
             }
         r.sweep_mode    = None

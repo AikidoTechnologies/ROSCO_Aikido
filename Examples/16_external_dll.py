@@ -42,8 +42,8 @@ def main():
     r.tuning_yaml   = parameter_filename
     r.wind_case_fcn = cl.simp_step
     r.wind_case_opts    = {
-        'U_start': [10],
-        'U_end': [15],
+        'UStart': [10],
+        'UEnd': [15],
         'wind_dir': run_dir,
         'TMax': 1.0,
         'TStep': 0.5,

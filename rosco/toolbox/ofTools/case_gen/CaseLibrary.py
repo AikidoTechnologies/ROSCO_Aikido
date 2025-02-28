@@ -141,10 +141,6 @@ def power_curve(**wind_case_opts):
         U = np.arange(4,14.5,.5).tolist()
         U = np.linspace(3,25,num=16)
 
-    if 'T_max' in wind_case_opts:
-        T_max = wind_case_opts['T_max']
-
-
     case_inputs = base_op_case()
     # simulation settings
     case_inputs[("Fst","TMax")] = {'vals':[T_max], 'group':0}
@@ -161,8 +157,8 @@ def simp_step(**wind_case_opts):
 
     TMax    = wind_case_opts.get('TMax',300.)
     T_step  = wind_case_opts.get('TStep',150.)
-    U_start = wind_case_opts.get('U_start',[16.])
-    U_end   = wind_case_opts.get('U_end',[17.])
+    U_start = wind_case_opts.get('UStart',[16.])
+    U_end   = wind_case_opts.get('UEnd',[17.])
 
     # Wind directory, default is run_dir
     wind_case_opts['wind_dir'] = wind_case_opts.get('wind_dir',wind_case_opts['run_dir'])
@@ -201,6 +197,7 @@ def simp_step(**wind_case_opts):
 def single_steps(discon_file,runDir, namebase,rosco_dll=''):
     # Set up cases for FIW-JIP project
     # 3.x in controller tuning register
+    # NEEDS UPDATING
 
     # Default Runtime
     T_max   = 800.
@@ -243,40 +240,28 @@ def single_steps(discon_file,runDir, namebase,rosco_dll=''):
 def steps(**wind_case_opts):
     # Muliple steps in same simulation at time, wind breakpoints, this function adds zero-order hold, 100 seconds to end
 
-    if 'tt' in wind_case_opts and 'U' in wind_case_opts:
-        tt = wind_case_opts['tt']
-        U = wind_case_opts['U']
-    else:
-        raise Exception('You must define tt and U in **wind_case_opts dict to use steps() fcn')
+  
+    t_steps = wind_case_opts.get('TSteps',[100])
+    u_steps = wind_case_opts.get('USteps',[])
 
-    if 'dt' in wind_case_opts:
-        dt = wind_case_opts['dt']
-    else:
-        dt = 0.05
+    dt = wind_case_opts.get('dt',0.05)
 
-    if 'U_0' in wind_case_opts:
-        U_0 = wind_case_opts['U_0']
-    else:
-        U_0 = U[0]
+    u_start = wind_case_opts.get('UStart', u_steps[0])
+    t_max = wind_case_opts.get('TMax', t_steps[-1] + 100)
 
-    if 'T_max' in wind_case_opts:
-        T_max = wind_case_opts['T_max']
-    else:
-        T_max = tt[-1] + 100
-
-    if len(tt) != len(U):
-        raise Exception('steps: len(tt) and len(U) must be the same')
+    if len(t_steps) != len(u_steps):
+        raise Exception('steps: len(TSteps) and len(USteps) must be the same')
 
 
     # Make Default step wind object
     hh_wind = HH_WindFile()
-    hh_wind.t_max = T_max
+    hh_wind.t_max = t_max
     hh_wind.filename = os.path.join(wind_case_opts['run_dir'],'steps.hh')
 
     # Step Wind Setup
     hh_wind.time = [0]
-    hh_wind.wind_speed = [U_0]
-    for t, u in zip(tt,U):
+    hh_wind.wind_speed = [u_start]
+    for t, u in zip(t_steps,u_steps):
         hh_wind.time.append(t-dt)
         hh_wind.wind_speed.append(hh_wind.wind_speed[-1])
 
@@ -296,7 +281,7 @@ def steps(**wind_case_opts):
     hh_wind.write()
     case_inputs = base_op_case()
 
-    case_inputs[("Fst","TMax")] = {'vals':[T_max], 'group':0}
+    case_inputs[("Fst","TMax")] = {'vals':[t_max], 'group':0}
 
 
     # wind inflow
@@ -313,10 +298,7 @@ def turb_bts(**wind_case_opts):
         wind_inputs (list of string wind inputs filenames)
     '''
 
-    if 'TMax' in wind_case_opts:
-        TMax = wind_case_opts['TMax']
-    else:
-        TMax = 720
+    TMax = wind_case_opts.get('TMax',720)
 
     if 'wind_filenames' not in wind_case_opts:
         raise Exception('Define wind_filenames when using turb_bts case generator')
@@ -347,9 +329,6 @@ def user_hh(**wind_case_opts):
     if not hasattr(TMax,'__len__'):
         TMax = len(wind_case_opts['wind_filenames']) * [TMax]
 
-
-
-
     # wind inflow
     case_inputs = base_op_case()
     case_inputs[("Fst","TMax")] = {'vals':TMax, 'group':1}
@@ -359,10 +338,10 @@ def user_hh(**wind_case_opts):
     return case_inputs
 
 def ramp(**wind_case_opts):
-    U_start     = wind_case_opts.get('U_start',8.)
-    U_end       = wind_case_opts.get('U_end',15.)
-    t_start     = wind_case_opts.get('t_start',100.)
-    t_end       = wind_case_opts.get('t_end',400.)
+    U_start     = wind_case_opts.get('UStart',8.)
+    U_end       = wind_case_opts.get('UEnd',15.)
+    t_start     = wind_case_opts.get('TStart',100.)
+    t_end       = wind_case_opts.get('TMax',400.)
     vert_shear  = wind_case_opts.get('vert_shear',.2) 
     both_dir    = wind_case_opts.get('both_dir',False)  # ramp up and down
 

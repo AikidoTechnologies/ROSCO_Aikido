@@ -109,8 +109,8 @@ def main():
     r.tuning_yaml   = parameter_filename
     r.wind_case_fcn = cl.simp_step  # single step wind input
     r.wind_case_opts    = {
-        'U_start': [13],
-        'U_end': [16],
+        'UStart': [13],
+        'UEnd': [16],
         'TMax': 10,
         'TStep': 5,
         }

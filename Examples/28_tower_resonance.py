@@ -65,16 +65,16 @@ def main():
     # Ramp: good demo of functionality, short for CI
     r.wind_case_fcn = cl.ramp  
     r.wind_case_opts    = {
-        'U_start': 0,  # from 10 to 15 m/s
-        'U_end': 10,
-        't_start': 100,
-        't_end': 300
+        'UStart': 0,  # from 10 to 15 m/s
+        'UEnd': 10,
+        'TStart': 100,
+        'TMax': 300
         }
     if not FULL_TEST:
-        r.wind_case_opts['t_start'] = 1
-        r.wind_case_opts['t_end'] = 2
-        r.wind_case_opts['U_start'] = 6
-        r.wind_case_opts['U_end'] = 7
+        r.wind_case_opts['TStart'] = 1
+        r.wind_case_opts['TMax'] = 2
+        r.wind_case_opts['UStart'] = 6
+        r.wind_case_opts['UEnd'] = 7
         
 
     # Alternative test cases
@@ -88,8 +88,8 @@ def main():
     # # turbulence
     # r.wind_case_fcn = cl.turb_bts  
     # r.wind_case_opts    = {
-    #     'TMax': 400,  # from 10 to 15 m/s
-    #     'wind_filenames': ['/Users/dzalkind/Downloads/heavy_test_1ETM_U6.000000_Seed603.0.bts'],
+    #     'TMax': 1,  # from 10 to 15 m/s
+    #     'wind_filenames': ['/Users/dzalkind/Tools/WEIS-Main/examples/02_run_openfast_cases/outputs/02_openfast_dlcs/openfast_runs/wind/weis_job_NTM_U12.000000_Seed438466540.0.bts'],
     #     }
 
     # Do a run with both tower modes

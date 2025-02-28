@@ -38,8 +38,8 @@ def main():
     r.tuning_yaml   = parameter_filename
     r.wind_case_fcn = cl.simp_step  # single step wind input
     r.wind_case_opts    = {
-        'U_start': [10],  # from 10 to 15 m/s
-        'U_end': [15],
+        'UStart': [10],  # from 10 to 15 m/s
+        'UEnd': [15],
         'wind_dir': run_dir,
         'TStep': 5,   # step at 5 sec
         'TMax': 10    # simulation is 10 sec

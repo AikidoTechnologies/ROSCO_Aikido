@@ -65,18 +65,18 @@ def main():
     if FULL_TEST:
         # Full test
         r.wind_case_opts    = {
-            'U_start': 5,  # from 10 to 15 m/s
-            'U_end': 35,
-            't_start': 100,
-            't_end': 2500,
+            'UStart': 5,  # from 10 to 15 m/s
+            'UEnd': 35,
+            'TStart': 100,
+            'TMax': 2500,
             }
     else:
         # Short test for CI
         r.wind_case_opts    = {
-            'U_start': 25,  # from 10 to 15 m/s
-            'U_end': 27,
-            't_start': 2,
-            't_end': 10,
+            'UStart': 25,  # from 10 to 15 m/s
+            'UEnd': 27,
+            'TStart': 2,
+            'TMax': 10,
             }
     r.save_dir      = run_dir
     r.rosco_dir     = rosco_dir
