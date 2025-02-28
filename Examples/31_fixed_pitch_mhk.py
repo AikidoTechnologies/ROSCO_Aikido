@@ -175,7 +175,7 @@ def main():
     if FULL_TEST:
         TMax = 60
     else:
-        TMax = 5
+        TMax = 1
 
     all_controller_params = [
         controller_params_1,

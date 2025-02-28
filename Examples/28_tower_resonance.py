@@ -8,11 +8,12 @@ Set up and run simulation with tower resonance avoidance
 import os
 from rosco.toolbox.ofTools.case_gen.run_FAST import run_FAST_ROSCO
 from rosco.toolbox.ofTools.case_gen import CaseLibrary as cl
-#from rosco.toolbox.ofTools.fast_io import output_processing
 from openfast_io.FAST_reader import InputReader_OpenFAST
 from rosco.toolbox.inputs.validation import load_rosco_yaml
 
 import numpy as np
+
+FULL_TEST = False
 
 def main():
     rpm2RadSec = 2.0*(np.pi)/60.0
@@ -36,7 +37,6 @@ def main():
     reader = InputReader_OpenFAST()
     reader.FAST_InputFile = path_params['FAST_InputFile']
     reader.FAST_directory = os.path.join(this_dir,'Tune_Cases',path_params['FAST_directory'])
-    # reader.FAST_directory = '/Users/dzalkind/Tools/ROSCO1/Test_Cases/ptfm_control_archive/IEA-15-240-RWT-UMaineSemi_ballast'
     reader.execute()
 
     # Reduce stiffness to 1/4 original
@@ -70,7 +70,14 @@ def main():
         't_start': 100,
         't_end': 300
         }
+    if not FULL_TEST:
+        r.wind_case_opts['t_start'] = 1
+        r.wind_case_opts['t_end'] = 2
+        r.wind_case_opts['U_start'] = 6
+        r.wind_case_opts['U_end'] = 7
+        
 
+    # Alternative test cases
     # # steady
     # r.wind_case_fcn = cl.power_curve  
     # r.wind_case_opts    = {

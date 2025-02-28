@@ -23,6 +23,8 @@ from openfast_io.FAST_reader import InputReader_OpenFAST
 from rosco.toolbox.inputs.validation import load_rosco_yaml
 from rosco.toolbox.controller import OpenLoopControl
 
+FULL_TEST = False
+
 def main():
     #directories
     this_dir            = os.path.dirname(os.path.abspath(__file__))
@@ -43,7 +45,6 @@ def main():
     reader = InputReader_OpenFAST()
     reader.FAST_InputFile = path_params['FAST_InputFile']
     reader.FAST_directory = os.path.join(this_dir,'Tune_Cases',path_params['FAST_directory'])
-    # reader.FAST_directory = '/Users/dzalkind/Tools/ROSCO1/Test_Cases/ptfm_control_archive/IEA-15-240-RWT-UMaineSemi_ballast'
     reader.execute()
 
     reader.fst_vt['ServoDyn']['NumSStC'] = 3
@@ -56,6 +57,10 @@ def main():
     t_trans = 60
     t_sigma = 80
     t_max = 200
+    if not FULL_TEST:
+        t_trans = 1
+        t_sigma = 2
+        t_max = 5
 
     applied_force = [-2e6, 1e6, 1e6]
 

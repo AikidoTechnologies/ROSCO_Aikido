@@ -8,6 +8,7 @@ import os
 from rosco.toolbox.ofTools.case_gen.run_FAST import run_FAST_ROSCO
 from rosco.toolbox.ofTools.case_gen import CaseLibrary as cl
 
+FULL_TEST = False
 
 def main():
     #directories
@@ -25,19 +26,16 @@ def main():
     # simulation set up
     r = run_FAST_ROSCO()
     r.tuning_yaml   = parameter_filename
-    # r.wind_case_fcn = cl.simp_step  # single step wind input
     r.wind_case_fcn = cl.power_curve
     r.wind_case_opts    = {
         'U': [2.5],
         'TMax': 100.0,
         }
+    if not FULL_TEST:
+        r.wind_case_opts['TMax'] = 1
     r.case_inputs = {}
-    # r.fst_vt        = reader.fst_vt
-    # r.controller_params = controller_params
     r.save_dir      = run_dir
     r.rosco_dir     = rosco_dir
-    # r.rosco_dll     = '/Users/dzalkind/Tools/ROSCO-PRC/rosco/controller/build/libdiscon.dylib'
-
     r.run_FAST()
 
 

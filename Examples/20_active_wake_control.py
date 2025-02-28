@@ -156,9 +156,9 @@ Active wake control (AWC) with blade pitching is implemented in this example wit
 import os
 from rosco.toolbox.ofTools.case_gen.run_FAST import run_FAST_ROSCO
 from rosco.toolbox.ofTools.case_gen import CaseLibrary as cl
-#from rosco.toolbox.ofTools.fast_io import output_processing
 from rosco.toolbox.utilities import read_DISCON #, DISCON_dict
-#import numpy as np
+
+FULL_TEST = False
 
 def main():
     # Choose your implementation method
@@ -208,27 +208,14 @@ def main():
         'U': [14],  # from 10 to 15 m/s
         'TMax': 100,
         }
+    if not FULL_TEST:
+        r.wind_case_opts['TMax'] = 1
     r.case_inputs = control_base_case
     r.case_inputs[("ServoDyn","Ptch_Cntrl")] = {'vals':[1], 'group':0}  # Individual pitch control must be enabled in ServoDyn
     r.save_dir      = run_dir
     r.rosco_dir     = rosco_dir
     r.n_cores = 5
     r.run_FAST()
-
-    # # Check AWC here
-    # filenames = [os.path.join(run_dir,'IEA15MW/simp_step/base/IEA15MW_0.outb')]
-    # fast_out = output_processing.output_processing()
-
-    # # Load and plot
-    # fastout = fast_out.load_fast_out(filenames)
-    # offset_2 = fastout[0]['BldPitch2'] - fastout[0]['BldPitch1']
-    # offset_3 = fastout[0]['BldPitch3'] - fastout[0]['BldPitch1']
-
-    # # check that offset (min,max) is very close to prescribed values
-    # np.testing.assert_almost_equal(offset_2.max(),pitch2_offset,decimal=3)
-    # np.testing.assert_almost_equal(offset_2.min(),pitch2_offset,decimal=3)
-    # np.testing.assert_almost_equal(offset_3.max(),pitch3_offset,decimal=3)
-    # np.testing.assert_almost_equal(offset_3.max(),pitch3_offset,decimal=3)
 
 
 
