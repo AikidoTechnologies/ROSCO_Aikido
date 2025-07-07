@@ -93,6 +93,7 @@ TYPE, PUBLIC :: ControlParameters
     INTEGER(IntKi)                :: SD_Mode                     ! Shutdown mode {0 - no shutdown procedure, 1 - pitch to max pitch at shutdown}
     REAL(DbKi)                    :: SD_MaxPit                   ! Maximum blade pitch angle to initiate shutdown, [rad]
     REAL(DbKi)                    :: SD_CornerFreq               ! Cutoff Frequency for first order low-pass filter for blade pitch angle, [rad/s]
+    REAL(DbKi)                    :: SD_Time                     ! Time that shutdown event is commanded.
     INTEGER(IntKi)                :: Fl_Mode                     ! Floating specific feedback mode {0 - no nacelle velocity feedback, 1 - nacelle velocity feedback}
     REAL(DbKi)                    :: Fl_Kp                       ! Nacelle velocity proportional feedback gain [s]
     INTEGER(IntKi)                :: Flp_Mode                    ! Flap actuator mode {0 - off, 1 - fixed flap position, 2 - PI flap control}

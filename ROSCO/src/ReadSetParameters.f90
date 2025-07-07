@@ -381,6 +381,7 @@ CONTAINS
         CALL ReadEmptyLine(UnControllerParameters,CurLine)   
         CALL ParseInput(UnControllerParameters,CurLine,'SD_MaxPit',accINFILE(1),CntrPar%SD_MaxPit,ErrVar)
         CALL ParseInput(UnControllerParameters,CurLine,'SD_CornerFreq',accINFILE(1),CntrPar%SD_CornerFreq,ErrVar)
+        CALL ParseInput(UnControllerParameters,CurLine,'SD_Time',accINFILE(1),CntrPar%SD_Time,ErrVar)
         CALL ReadEmptyLine(UnControllerParameters,CurLine)      
 
         !------------ FLOATING ------------

@@ -403,8 +403,8 @@ CONTAINS
             ! Filter pitch signal
             SD_BlPitchF = LPFilter(LocalVar%PC_PitComT, LocalVar%DT, CntrPar%SD_CornerFreq, LocalVar%FP, LocalVar%iStatus, LocalVar%restart, objInst%instLPF)
             
-            ! Go into shutdown if above max pit
-            IF (SD_BlPitchF > CntrPar%SD_MaxPit) THEN
+            ! James modifies. Go into shut down mode if enabled, and simulation time is greater than specified in the inputs.
+            IF (LocalVar%Time > CntrPar%SD_Time) THEN
                 LocalVar%SD  = .TRUE.
             ELSE
                 LocalVar%SD  = .FALSE.
