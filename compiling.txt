@@ -1,0 +1,6 @@
+cd ROSCO/rosco/controller
+mkdir build
+cd build
+cmake ..                        # Mac/linux only
+cmake .. -G "MinGW Makefiles"   # Windows only
+make install
