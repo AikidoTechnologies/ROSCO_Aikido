@@ -661,9 +661,9 @@ CONTAINS
         ENDIF
 
         ! SD_Mode
-        IF ((CntrPar%SD_Mode < 0) .OR. (CntrPar%SD_Mode > 1)) THEN
+        IF ((CntrPar%SD_Mode < 0) .OR. (CntrPar%SD_Mode > 3)) THEN
             ErrVar%aviFAIL = -1
-            ErrVar%ErrMsg  = 'SD_Mode must be 0 or 1.'
+            ErrVar%ErrMsg  = 'SD_Mode must be 0 - 3.'
         ENDIF
 
         ! Fl_Mode

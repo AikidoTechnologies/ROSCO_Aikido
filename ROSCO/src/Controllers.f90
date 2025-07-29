@@ -94,6 +94,13 @@ CONTAINS
             LocalVar%PC_PitComT = Shutdown(LocalVar, CntrPar, objInst)
         ENDIF
         
+        ! James adds startup controller in here. This holds blade pitch at idle until a certian time is passed, then does nothing.
+        IF ((CntrPar%SD_Mode == 3) .AND. (LocalVar%Time <= CntrPar%SD_Time)) THEN
+            LocalVar%PC_PitComT = CntrPar%PC_MaxPit
+        ELSEIF ((CntrPar%SD_Mode == 3) .AND. (LocalVar%Time > CntrPar%SD_Time) .AND. (LocalVar%GenSpeedF < CntrPar%VS_MinOMSpd)) THEN
+            !LocalVar%PC_PitComT = 15.0*0.017453
+        ENDIF
+        
         ! Saturate collective pitch commands:
         LocalVar%PC_PitComT = saturate(LocalVar%PC_PitComT, LocalVar%PC_MinPit, CntrPar%PC_MaxPit)                    ! Saturate the overall command using the pitch angle limits
         LocalVar%PC_PitComT = ratelimit(LocalVar%PC_PitComT, CntrPar%PC_MinRat, CntrPar%PC_MaxRat, LocalVar%DT, LocalVar%restart, LocalVar%rlP,objInst%instRL,LocalVar%BlPitchCMeas) ! Saturate the overall command of blade K using the pitch rate limit
