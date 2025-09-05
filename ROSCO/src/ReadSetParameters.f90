@@ -382,6 +382,10 @@ CONTAINS
         CALL ParseInput(UnControllerParameters,CurLine,'SD_MaxPit',accINFILE(1),CntrPar%SD_MaxPit,ErrVar)
         CALL ParseInput(UnControllerParameters,CurLine,'SD_CornerFreq',accINFILE(1),CntrPar%SD_CornerFreq,ErrVar)
         CALL ParseInput(UnControllerParameters,CurLine,'SD_Time',accINFILE(1),CntrPar%SD_Time,ErrVar)
+        CALL ParseInput(UnControllerParameters,CurLine,'SU_WindSpeedN',accINFILE(1),CntrPar%SU_WindSpeedN,ErrVar)
+        CALL ParseAry(UnControllerParameters, CurLine, 'SU_WindSpeeds', CntrPar%SU_WindSpeeds, CntrPar%SU_WindSpeedN, accINFILE(1), ErrVar )
+        CALL ParseAry(UnControllerParameters, CurLine, 'SU_BladePitch', CntrPar%SU_BladePitch, CntrPar%SU_WindSpeedN, accINFILE(1), ErrVar )
+        CALL ParseAry(UnControllerParameters, CurLine, 'SU_ShaftSpeed', CntrPar%SU_ShaftSpeed, CntrPar%SU_WindSpeedN, accINFILE(1), ErrVar )
         CALL ReadEmptyLine(UnControllerParameters,CurLine)      
 
         !------------ FLOATING ------------

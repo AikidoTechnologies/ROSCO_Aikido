@@ -39,6 +39,8 @@ CONTAINS
 
         ! Allocate Variables:
         INTEGER(IntKi)                                  :: K            ! Index used for looping through blades.
+        REAL(DbKi)                 :: pitchTarget
+        REAL(DbKi)                 :: speedTarget
 
         CHARACTER(*),               PARAMETER           :: RoutineName = 'PitchControl'
 
@@ -97,8 +99,27 @@ CONTAINS
         ! James adds startup controller in here. This holds blade pitch at idle until a certian time is passed, then does nothing.
         IF ((CntrPar%SD_Mode == 3) .AND. (LocalVar%Time <= CntrPar%SD_Time)) THEN
             LocalVar%PC_PitComT = CntrPar%PC_MaxPit
-        ELSEIF ((CntrPar%SD_Mode == 3) .AND. (LocalVar%Time > CntrPar%SD_Time) .AND. (LocalVar%GenSpeedF < CntrPar%VS_MinOMSpd)) THEN
-            !LocalVar%PC_PitComT = 15.0*0.017453
+            LocalVar%Started = 0
+            speedTarget = interp1d(CntrPar%SU_WindSpeeds, CntrPar%SU_ShaftSpeed, LocalVar%HorWindV, ErrVar)
+        ELSEIF ((CntrPar%SD_Mode == 3) .AND. (LocalVar%Time > CntrPar%SD_Time) .AND. (LocalVar%GenSpeedF == LocalVar%GenSpeedF)) THEN
+            ! If we are not started, do the startup. Else do nothing
+            IF (LocalVar%Started == 0) THEN
+                ! Look up pitch target from inputs based on wind speed. Rate limit pitch command to this at 1 deg/s
+                pitchTarget = interp1d(CntrPar%SU_WindSpeeds, CntrPar%SU_BladePitch, LocalVar%HorWindV, ErrVar)
+                print *, "Here"
+                ! rate limit pitch command at 1 deg/s
+                
+                
+                ! Stop integrators winding up some how. Pitch and torque? Maybe set Torque state.
+                
+                
+                LocalVar%PC_PitComT = pitchTarget
+            ELSE
+                ! Do nothing here if we are started.
+                !LocalVar%Started = 1
+                print *, "Here2"
+            ENDIF
+            
         ENDIF
         
         ! Saturate collective pitch commands:

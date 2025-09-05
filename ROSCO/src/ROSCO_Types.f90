@@ -94,6 +94,10 @@ TYPE, PUBLIC :: ControlParameters
     REAL(DbKi)                    :: SD_MaxPit                   ! Maximum blade pitch angle to initiate shutdown, [rad]
     REAL(DbKi)                    :: SD_CornerFreq               ! Cutoff Frequency for first order low-pass filter for blade pitch angle, [rad/s]
     REAL(DbKi)                    :: SD_Time                     ! Time that shutdown event is commanded.
+    INTEGER(IntKi)                :: SU_WindSpeedN               ! Number of wind speeds in startup schedule array.
+    REAL(DbKi), DIMENSION(:), ALLOCATABLE     :: SU_WindSpeeds               ! Wind speeds index [m/s]
+    REAL(DbKi), DIMENSION(:), ALLOCATABLE     :: SU_BladePitch               ! Blade pitch for wind speed index [rad]
+    REAL(DbKi), DIMENSION(:), ALLOCATABLE     :: SU_ShaftSpeed               ! Rotor speed for wind speeds [rad/s]
     INTEGER(IntKi)                :: Fl_Mode                     ! Floating specific feedback mode {0 - no nacelle velocity feedback, 1 - nacelle velocity feedback}
     REAL(DbKi)                    :: Fl_Kp                       ! Nacelle velocity proportional feedback gain [s]
     INTEGER(IntKi)                :: Flp_Mode                    ! Flap actuator mode {0 - off, 1 - fixed flap position, 2 - PI flap control}
@@ -268,6 +272,7 @@ TYPE, PUBLIC :: LocalVariables
     TYPE(FilterParameters)        :: FP                          ! Filter parameters derived type
     TYPE(piParams)                :: piP                         ! PI parameters derived type
     TYPE(rlParams)                :: rlP                         ! Rate limiter parameters derived type
+    INTEGER(IntKi)                :: Started                     ! Flag for if we are started  0 - no
 END TYPE LocalVariables
 
 TYPE, PUBLIC :: ObjectInstances
